@@ -4,8 +4,6 @@ REPORT=/tmp/report.txt
 
 MONITOR=/scans/monitor.pcap
 
-LOCAL_PREFIX='10.20.'
-
 chown root:root "$REPORT" || true
 chmod 666 "$REPORT" || true
 

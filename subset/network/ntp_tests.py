@@ -7,7 +7,11 @@ arguments = sys.argv
 
 test_request = str(arguments[1])
 pcap_file = str(arguments[2])
-LOCAL_PREFIX = str(arguments[3])
+
+if len(args) > 3 and args[3]:
+    LOCAL_PREFIX = str(args[3])
+else:
+    LOCAL_PREFIX = "10.20."
 
 report_filename = 'ntp_tests.txt'
 ignore = '%%'
