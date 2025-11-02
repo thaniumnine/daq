@@ -7,6 +7,7 @@ arguments = sys.argv
 
 test_request = str(arguments[1])
 pcap_file = str(arguments[2])
+LOCAL_PREFIX = str(arguments[3])
 
 report_filename = 'ntp_tests.txt'
 ignore = '%%'
@@ -17,7 +18,7 @@ description_ntp_support = 'Device supports NTP version 4.'
 description_ntp_update = 'Device synchronizes its time to the NTP server.'
 
 NTP_VERSION_PASS = 4
-LOCAL_PREFIX = '10.20.'
+
 NTP_SERVER_SUFFIX = '.2'
 MODE_CLIENT = 3
 MODE_SERVER = 4

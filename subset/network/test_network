@@ -4,6 +4,11 @@ REPORT=/tmp/report.txt
 
 MONITOR=/scans/monitor.pcap
 
+LOCAL_PREFIX='10.20.'
+
+chown root:root "$REPORT" || true
+chmod 666 "$REPORT" || true
+
 # General Network Tests
 python network_tests.py communication.network.min_send $MONITOR $TARGET_IP
 python network_tests.py communication.network.type $MONITOR $TARGET_IP
@@ -11,8 +16,8 @@ python network_tests.py communication.network.type $MONITOR $TARGET_IP
 cat network_tests.txt >> $REPORT
 
 # NTP Tests
-python ntp_tests.py ntp.network.ntp_support $MONITOR
-python ntp_tests.py ntp.network.ntp_update $MONITOR
+python ntp_tests.py ntp.network.ntp_support $MONITOR $LOCAL_PREFIX
+python ntp_tests.py ntp.network.ntp_update $MONITOR $LOCAL_PREFIX
 
 cat ntp_tests.txt >> $REPORT
 
