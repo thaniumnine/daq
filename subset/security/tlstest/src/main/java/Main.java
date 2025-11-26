@@ -4,18 +4,19 @@ public class Main {
     String tlsReport = "";
     Report report = new Report();
 
-    if (args.length != 2) {
-      throw new IllegalArgumentException("Expected 2 args, only " + args.length + " detected.");
+    if (args.length != 3) {
+      throw new IllegalArgumentException("Expected 3 args, only " + args.length + " detected.");
     }
     String ipAddress = args[0];
     String caFile = "None".equals(args[1])?null:args[1];
+    int port = Integer.parseInt(args[2]);
     System.out.println("Args:");
     System.out.println("IP Address: " + ipAddress);
     System.out.println("CA File: " + caFile);
     //Generate the Client/Server test objects
-    Server tlsServer1_0 = new Server(ipAddress, 443,"1",caFile);
-    Server tlsServer1_2 = new Server(ipAddress, 443,"1.2",caFile);
-    Server tlsServer1_3 = new Server(ipAddress, 443,"1.3",caFile);
+    Server tlsServer1_0 = new Server(ipAddress, port,"1",caFile);
+    Server tlsServer1_2 = new Server(ipAddress, port,"1.2",caFile);
+    Server tlsServer1_3 = new Server(ipAddress, port,"1.3",caFile);
     Client client = new Client(ipAddress,new int[]{443,8883},new String[]{"1.2","1.3"});
     //Client client_1_3 = new Client(ipAddress,443,"1.3");
     //Run the tests

@@ -9,9 +9,8 @@ DEVICE_CONFIG=/config/device/
 MANIFEST=./tls.module_manifest.json
 MODULE_CONFIG=/config/device/module_config.json
 
-if [ -n "$TARGET_IP" ]; then
-    echo Collecting TLS cert from target address %% $TARGET_IP > $MONO_LOG
-
+if [ -n "$TARGET_IP" ] && [ -n "$TARGET_PORT" ]; then
+    echo "Collecting TLS cert from target address $TARGET_IP:$TARGET_PORT" > "$MONO_LOG"
     export CA_FILE="None"
     if [ -f "$MODULE_CONFIG" ]; then
       echo "Module Config present"
@@ -23,7 +22,7 @@ if [ -n "$TARGET_IP" ]; then
       CA_FILE="CA_Faux.pem"
     fi
 
-    java -jar tlstest/build/libs/tlstest.jar $TARGET_IP $CA_FILE
+    java -jar tlstest/build/libs/tlstest.jar $TARGET_IP $CA_FILE $TARGET_PORT
 
     grep "RESULT" $LOCAL_REPORT | tee -a $RESULT_LINES
     grep -v "RESULT" $LOCAL_REPORT | tee -a $MONO_LOG
@@ -34,7 +33,7 @@ if [ -n "$TARGET_IP" ]; then
                       $RESULT_LINES
 
 else
-    echo "TARGET_IP not configured TLS test failed" > $MONO_LOG
+    echo "Error: TARGET_IP or TARGET_PORT not configured TLS test failed" > $MONO_LOG
     cat $MONO_LOG
 
     write_out_monolog $REPORT \
